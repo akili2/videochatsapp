@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil - Video Chat</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center">
+    <h1 class="text-4xl font-extrabold text-blue-600 mb-6">
+        <i class="fas fa-comments mr-2"></i> Bienvenue !
+    </h1>
+    <input id="username" placeholder="Votre pseudo (ex: Invité)"
+           class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <button id="createRoomBtn"
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg mb-4 transition duration-300 ease-in-out">
+        <i class="fas fa-plus-circle mr-2"></i> Créer un appel
+    </button>
+
+    <div id="createRoomSection" class="hidden mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <p class="text-lg font-semibold text-blue-800 mb-2">Partagez cet ID ou ce lien :</p>
+        <div class="flex items-center justify-center mb-3">
+            <span id="generatedRoomId" class="text-2xl font-bold text-blue-700 mr-3"></span>
+            <button id="copyIdBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md text-sm">
+                <i class="fas fa-copy mr-1"></i> Copier ID
+            </button>
+        </div>
+        <div class="flex items-center justify-center">
+            <a id="callLink" href="#" target="_blank" class="text-blue-600 hover:underline text-sm truncate"></a>
+            <button id="copyLinkBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md text-sm ml-2">
+                <i class="fas fa-link mr-1"></i> Copier Lien
+            </button>
+        </div>
+        <button id="startCallBtn" class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+            <i class="fas fa-play-circle mr-2"></i> Démarrer l'appel
+        </button>
+    </div>
+
+    <div class="my-6 text-gray-500 font-semibold">OU</div>
+
+    <input id="roomInput" placeholder="Entrez l'ID de l'appel à rejoindre"
+           class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus-ring-blue-500" />
+    <button id="joinRoomBtn"
+            class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out">
+        <i class="fas fa-door-open mr-2"></i> Rejoindre l'appel
+    </button>
+  </div>
+
+  <script>
+    const usernameInput = document.getElementById("username");
+    const createRoomBtn = document.getElementById("createRoomBtn");
+    const joinRoomBtn = document.getElementById("joinRoomBtn");
+    const roomInput = document.getElementById("roomInput");
+    const createRoomSection = document.getElementById("createRoomSection");
+    const generatedRoomIdSpan = document.getElementById("generatedRoomId");
+    const copyIdBtn = document.getElementById("copyIdBtn");
+    const callLink = document.getElementById("callLink");
+    const copyLinkBtn = document.getElementById("copyLinkBtn");
+    const startCallBtn = document.getElementById("startCallBtn");
+
+    document.getElementById("createRoomBtn").onclick = () => {
+        const username = usernameInput.value.trim() || "Invité";
+        const roomId = Math.random().toString(36).substr(2, 6).toUpperCase(); // ID en majuscules
+        const currentUrl = window.location.origin;
+        const roomUrl = `${currentUrl}/room.html?room=${roomId}&username=${encodeURIComponent(username)}`;
+
+        generatedRoomIdSpan.textContent = roomId;
+        callLink.href = roomUrl;
+        callLink.textContent = roomUrl;
+        createRoomSection.classList.remove("hidden");
+
+        // Désactiver les boutons de création/jointure pour éviter les confusions
+        createRoomBtn.disabled = true;
+        joinRoomBtn.disabled = true;
+        roomInput.disabled = true;
+        usernameInput.disabled = true;
+    };
+
+    copyIdBtn.onclick = () => {
+        navigator.clipboard.writeText(generatedRoomIdSpan.textContent)
+            .then(() => alert("ID copié !"))
+            .catch(err => console.error("Erreur de copie de l'ID:", err));
+    };
+
+    copyLinkBtn.onclick = () => {
+        navigator.clipboard.writeText(callLink.href)
+            .then(() => alert("Lien copié !"))
+            .catch(err => console.error("Erreur de copie du lien:", err));
+    };
+
+    startCallBtn.onclick = () => {
+        const username = usernameInput.value.trim() || "Invité";
+        const roomId = generatedRoomIdSpan.textContent;
+        window.location.href = `/room.html?room=${roomId}&username=${encodeURIComponent(username)}`;
+    };
+
+    document.getElementById("joinRoomBtn").onclick = () => {
+      const room = roomInput.value.trim();
+      const username = usernameInput.value.trim() || "Invité";
+      if (room) { // Assurez-vous que l'ID de salle n'est pas vide
+        window.location.href = `/room.html?room=${room}&username=${encodeURIComponent(username)}`;
+      } else {
+        alert("Veuillez entrer un ID d'appel.");
+      }
+    };
+  </script>
+</body>
+</html>
