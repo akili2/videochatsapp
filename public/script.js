@@ -1,4 +1,8 @@
-const socket = io();
+// Configuration automatique pour le déploiement
+// Cette ligne sera remplacée automatiquement lors du déploiement
+// Configuration automatique pour akili2/videochatsapp-template
+const BACKEND_URL = window.location.hostname === 'localhost' ? '' : 'YOUR_RAILWAY_APP_URL';
+const socket = io(BACKEND_URL || undefined);
 const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get("room");
 const username = urlParams.get("username") || "Invité";
@@ -28,8 +32,15 @@ let otherUserId; // Pour stocker l'ID de l'autre utilisateur
 let isAudioMuted = false;
 let isVideoMuted = false;
 
+// Configuration STUN pour l'hébergement gratuit (plusieurs serveurs pour la redondance)
 const config = {
-  iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+  iceServers: [
+    { urls: "stun:stun.l.google.com:19302" },
+    { urls: "stun:stun1.l.google.com:19302" },
+    { urls: "stun:stun2.l.google.com:19302" },
+    { urls: "stun:stun3.l.google.com:19302" },
+    { urls: "stun:stun4.l.google.com:19302" }
+  ],
 };
 
 // Fonction pour créer et configurer la connexion pair-à-pair

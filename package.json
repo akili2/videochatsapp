@@ -1,16 +1,33 @@
 {
-  "name": "videochatsapp",
+  "name": "videochatsapp-template",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "Template de déploiement gratuit pour VideoChatsApp - GitHub Pages + Railway + STUN gratuit",
+  "main": "server/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "deploy:railway": "cd server && npm install && railway up",
+    "setup": "npm run setup:railway && npm run setup:github",
+    "setup:railway": "echo 'Configuring Railway...' && cd server && npm install",
+    "setup:github": "echo 'GitHub Pages will be configured automatically'",
+    "test": "echo 'Open http://localhost:3000 to test locally'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "express": "^4.19.2",
-    "socket.io": "^4.7.5"
+  "keywords": ["webrtc", "videochat", "socket.io", "template", "free", "deployment"],
+  "author": "VideoChatsApp",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/videochatsapp-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/videochatsapp-template/issues"
+  },
+  "homepage": "https://YOUR_USERNAME.github.io/videochatsapp-template/",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
