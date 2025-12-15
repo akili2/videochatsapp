@@ -1,0 +1,35 @@
+services:
+  # Service principal VideoChatsApp
+  - type: web
+    name: videochatsapp
+    env: node
+    plan: free
+    buildCommand: |
+      cd server
+      npm install
+    startCommand: |
+      cd server
+      node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          property: host
+          name: videochatsapp
+    domains:
+      - videochatsapp.onrender.com
+    
+  # Service static pour le frontend (optionnel)
+  # Décommenter si vous voulez tout héberger sur Render
+  # - type: static
+  #   name: videochatsapp-frontend
+  #   buildCommand: |
+  #     # Build du frontend si nécessaire
+  #     echo "Frontend ready"
+  #   staticPublishPath: ./public
+  #   headers:
+  #     - path: /*
+  #       name: Cache-Control
+  #       value: no-cache

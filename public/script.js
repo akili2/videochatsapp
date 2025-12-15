@@ -1,7 +1,7 @@
 // Configuration automatique pour le déploiement
 // Cette ligne sera remplacée automatiquement lors du déploiement
 // Configuration automatique pour akili2/videochatsapp-template
-const BACKEND_URL = window.location.hostname === 'localhost' ? '' : 'YOUR_RAILWAY_APP_URL';
+const BACKEND_URL = window.location.hostname === 'localhost' ? '' : 'https://videochatsapp.onrender.com';
 const socket = io(BACKEND_URL || undefined);
 const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get("room");

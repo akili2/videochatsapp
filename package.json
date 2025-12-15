@@ -2,10 +2,10 @@
   "name": "videochatsapp-template",
   "version": "1.0.0",
   "description": "Template de déploiement gratuit pour VideoChatsApp - GitHub Pages + Railway + STUN gratuit",
-  "main": "server/index.js",
+  "main": "server/server.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
+    "start": "cd server && node server.js",
+    "dev": "cd server && nodemon server.js",
     "deploy:railway": "cd server && npm install && railway up",
     "setup": "npm run setup:railway && npm run setup:github",
     "setup:railway": "echo 'Configuring Railway...' && cd server && npm install",
@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/videochatsapp-template.git"
+    "url": "https://github.com/akili2/videochatsapp.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/videochatsapp-template/issues"
+    "url": "https://github.com/akili2/videochatsapp/issues"
   },
-  "homepage": "https://YOUR_USERNAME.github.io/videochatsapp-template/",
+  "homepage": "https://akili2.github.io/videochatsapp/",
   "devDependencies": {
     "nodemon": "^3.0.2"
   }
